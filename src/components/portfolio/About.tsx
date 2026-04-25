@@ -13,8 +13,8 @@ const principles = [
   },
   {
     icon: GitBranch,
-    title: "Pragmatic Architecture",
-    desc: "I optimize for change. Boring tech, clear boundaries, and contracts that survive team turnover.",
+    title: "Architectural Design",
+    desc: "Designing robust, maintainable systems that evolve with business requirements over time.",
   },
   {
     icon: Network,
@@ -33,18 +33,22 @@ const About = () => {
               <span>01 / about</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gradient">
-              Engineering with intent.
+              Engineering mindset, product perspective.
             </h2>
             <p className="text-muted-foreground leading-relaxed">
-              I'm a fullstack engineer with seven years building systems that need to{" "}
-              <span className="text-foreground">stay up</span>,{" "}
-              <span className="text-foreground">scale predictably</span>, and{" "}
-              <span className="text-foreground">ship continuously</span>.
+              I'm a fullstack engineer with <span className="text-foreground">8+ years of experience</span>{" "}
+              building and scaling web applications. My focus is on creating systems that are not just
+              functional, but <span className="text-foreground">resilient</span>,{" "}
+              <span className="text-foreground">observable</span>, and{" "}
+              <span className="text-foreground">maintainable</span>.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              My background spans high-throughput backends, real-time data pipelines, and the polished
-              interfaces that sit on top. I've led migrations off monoliths, designed multi-region failover,
-              and shipped products from zero to seven figures of ARR.
+              I believe great software comes from understanding the problem deeply before writing code.
+              I approach each project with curiosity, breaking down complex challenges into elegant solutions.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              Currently interested in distributed systems, edge computing, and developer tooling. When
+              I'm not coding, I contribute to open source and write about software architecture.
             </p>
             <div className="pt-4 font-mono text-xs text-muted-foreground space-y-1">
               <div><span className="text-teal">{">"}</span> based in San Francisco · open to remote</div>
