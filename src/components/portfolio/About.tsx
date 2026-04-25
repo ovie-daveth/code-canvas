@@ -28,7 +28,7 @@ const About = () => {
     <section id="about" className="relative py-32">
       <div className="container">
         <div className="grid lg:grid-cols-12 gap-12">
-          <div className="lg:col-span-4 space-y-6">
+          <div className="lg:col-span-7 space-y-6">
             <div className="section-label">
               <span>01 / about</span>
             </div>
@@ -51,12 +51,12 @@ const About = () => {
               I'm not coding, I contribute to open source and write about software architecture.
             </p>
             <div className="pt-4 font-mono text-xs text-muted-foreground space-y-1">
-              <div><span className="text-teal">{">"}</span> based in San Francisco · open to remote</div>
-              <div><span className="text-teal">{">"}</span> currently @ stealth fintech</div>
+              <div><span className="text-teal">{">"}</span> based in Warri, Nigeria · open to remote</div>
+              <div><span className="text-teal">{">"}</span> currently @ PremiumTrust Bank</div>
             </div>
           </div>
 
-          <div className="lg:col-span-8 grid sm:grid-cols-2 gap-4">
+          <div className="lg:col-span-5 grid sm:grid-cols-1 gap-4">
             {principles.map((p, i) => (
               <div
                 key={p.title}
