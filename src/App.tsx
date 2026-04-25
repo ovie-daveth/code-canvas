@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import ProjectsPage from "./pages/Projects.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import PortfolioChat from "@/components/portfolio/PortfolioChat";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <PortfolioChat />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

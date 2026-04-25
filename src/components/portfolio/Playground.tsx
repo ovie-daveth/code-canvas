@@ -6,7 +6,7 @@ type Endpoint = {
   path: string;
   summary: string;
   params?: { name: string; in: "query" | "path" | "body"; type: string; example: string }[];
-  responses: Record<string, any>;
+  responses: Record<string, unknown>;
   status: number;
   latency: number;
 };
@@ -101,7 +101,7 @@ const Playground = () => {
   };
 
   return (
-    <section id="playground" className="relative py-32 border-t border-border/50">
+    <section id="playground" className="relative py-10 border-t border-border/50">
       <div className="container">
         <div className="flex items-end justify-between flex-wrap gap-4 mb-12">
           <div className="space-y-4 max-w-2xl">

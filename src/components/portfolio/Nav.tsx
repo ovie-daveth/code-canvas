@@ -5,7 +5,6 @@ const navItems = [
   { id: "about", label: "About" },
   { id: "stack", label: "Stack" },
   { id: "projects", label: "Projects" },
-  { id: "playground", label: "Playground" },
   { id: "experience", label: "Experience" },
   { id: "contact", label: "Contact" },
 ];
@@ -29,7 +28,7 @@ const Nav = () => {
       <div className="container flex h-16 items-center justify-between">
         <a href="#top" className="flex items-center gap-2 font-mono text-sm font-semibold">
           <span className="inline-block w-2 h-2 rounded-full bg-teal animate-pulse" />
-          <span className="text-foreground">alex.dev</span>
+          <span className="text-foreground">ovie.dev</span>
           <span className="text-muted-foreground">/~</span>
         </a>
 

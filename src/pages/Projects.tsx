@@ -5,7 +5,6 @@ import {
   ExternalLink,
   Github,
   Search,
-  Terminal,
   Code2,
   Server,
   Cloud,
@@ -14,6 +13,7 @@ import {
   Calendar,
 } from "lucide-react";
 import Nav from "@/components/portfolio/Nav";
+import ApiPlaygroundModal from "@/components/portfolio/ApiPlaygroundModal";
 import {
   projects,
   categoryLabels,
@@ -45,6 +45,7 @@ const statusStyles: Record<Project["status"], string> = {
 const ProjectRow = ({ project, idx }: { project: Project; idx: number }) => {
   return (
     <article
+      id={`project-${project.id}`}
       className="surface-card p-6 group animate-fade-up flex flex-col"
       style={{ animationDelay: `${Math.min(idx, 8) * 50}ms` }}
     >
@@ -128,13 +129,10 @@ const ProjectRow = ({ project, idx }: { project: Project; idx: number }) => {
           <Github size={13} /> Codebase
         </a>
         {project.hasApi && (
-          <Link
-            to={`/#playground`}
-            className="ml-auto inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-mono text-teal border border-teal/40 rounded hover:bg-teal/10 transition-colors"
-          >
-            <Terminal size={12} />
-            Test API
-          </Link>
+          <ApiPlaygroundModal
+            project={project}
+            triggerClassName="ml-auto inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-mono text-teal border border-teal/40 rounded hover:bg-teal/10 transition-colors"
+          />
         )}
       </footer>
     </article>

@@ -2,12 +2,14 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ExternalLink, Github, ChevronDown, ArrowRight } from "lucide-react";
 import { featuredProjects, type Project } from "@/data/projects";
+import ApiPlaygroundModal from "@/components/portfolio/ApiPlaygroundModal";
 
 const ProjectCard = ({ project, idx }: { project: Project; idx: number }) => {
   const [open, setOpen] = useState(false);
 
   return (
     <article
+      id={`project-${project.id}`}
       className="surface-card overflow-hidden group animate-fade-up"
       style={{ animationDelay: `${idx * 80}ms` }}
     >
@@ -70,9 +72,15 @@ const ProjectCard = ({ project, idx }: { project: Project; idx: number }) => {
           >
             <Github size={14} /> Repo
           </a>
+          {project.hasApi && (
+            <ApiPlaygroundModal
+              project={project}
+              triggerClassName="ml-auto inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-mono text-teal border border-teal/40 rounded hover:bg-teal/10 transition-colors"
+            />
+          )}
           <button
             onClick={() => setOpen(!open)}
-            className="ml-auto inline-flex items-center gap-1.5 text-xs font-mono text-teal hover:text-teal-glow transition-colors"
+            className={`${project.hasApi ? "" : "ml-auto"} inline-flex items-center gap-1.5 text-xs font-mono text-teal hover:text-teal-glow transition-colors`}
           >
             {open ? "collapse" : "deep dive"}
             <ChevronDown size={14} className={`transition-transform ${open ? "rotate-180" : ""}`} />
@@ -94,7 +102,7 @@ const ProjectCard = ({ project, idx }: { project: Project; idx: number }) => {
 
 const Projects = () => {
   return (
-    <section id="projects" className="relative py-32 border-t border-border/50">
+    <section id="projects" className="relative py-10 border-t border-border/50">
       <div className="container">
         <div className="flex items-end justify-between flex-wrap gap-4 mb-12">
           <div className="space-y-4 max-w-2xl">

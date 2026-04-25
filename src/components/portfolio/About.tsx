@@ -21,11 +21,16 @@ const principles = [
     title: "Cross-Stack Fluency",
     desc: "From DB indices to React reconciliation to Kubernetes IRSA — full ownership across the stack.",
   },
+  // {
+  //   icon: Network,
+  //   title: "AI Systems Integration",
+  //   desc: "Integrating intelligent systems with scalable backends to create seamless user experiences."
+  // }
 ];
 
 const About = () => {
   return (
-    <section id="about" className="relative py-32">
+    <section id="about" className="relative py-10">
       <div className="container">
         <div className="grid lg:grid-cols-12 gap-12">
           <div className="lg:col-span-7 space-y-6">
@@ -36,7 +41,7 @@ const About = () => {
               Engineering mindset, product perspective.
             </h2>
             <p className="text-muted-foreground leading-relaxed">
-              I'm a fullstack engineer with <span className="text-foreground">8+ years of experience</span>{" "}
+              I'm a fullstack engineer with <span className="text-foreground">6+ years of experience</span>{" "}
               building and scaling web applications. My focus is on creating systems that are not just
               functional, but <span className="text-foreground">resilient</span>,{" "}
               <span className="text-foreground">observable</span>, and{" "}
@@ -47,7 +52,7 @@ const About = () => {
               I approach each project with curiosity, breaking down complex challenges into elegant solutions.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              Currently interested in distributed systems, edge computing, and developer tooling. When
+              Currently interested in distributed systems, edge computing, and applied AI—particularly how intelligent systems integrate with scalable backends. When
               I'm not coding, I contribute to open source and write about software architecture.
             </p>
             <div className="pt-4 font-mono text-xs text-muted-foreground space-y-1">

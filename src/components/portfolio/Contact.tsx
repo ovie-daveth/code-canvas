@@ -3,9 +3,9 @@ import { Github, Linkedin, Mail, Send, Check } from "lucide-react";
 import { toast } from "sonner";
 
 const links = [
-  { icon: Github, label: "github.com/alexchen", href: "https://github.com" },
-  { icon: Linkedin, label: "linkedin.com/in/alexchen", href: "https://linkedin.com" },
-  { icon: Mail, label: "alex@alex.dev", href: "mailto:alex@alex.dev" },
+  { icon: Github, label: "github.com/ovie-daveth", href: "https://github.com/ovie-daveth" },
+  { icon: Linkedin, label: "linkedin.com/in/omokefe-ovie", href: "https://linkedin.com/in/omokefe-ovie" },
+  { icon: Mail, label: "ovie@ovie.dev", href: "mailto:oviedavid77@gmail.com" },
 ];
 
 const Contact = () => {
@@ -23,7 +23,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="relative py-32 border-t border-border/50">
+    <section id="contact" className="relative py-10 border-t border-border/50">
       <div className="container">
         <div className="grid lg:grid-cols-12 gap-12">
           <div className="lg:col-span-5 space-y-6">
@@ -55,12 +55,12 @@ const Contact = () => {
 
           <div className="lg:col-span-7">
             <form onSubmit={onSubmit} className="surface-card p-6 md:p-8 space-y-5">
-              <div className="flex items-center justify-between pb-4 border-b border-border">
+              {/* <div className="flex items-center justify-between pb-4 border-b border-border">
                 <div className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
                   POST /api/v1/contact
                 </div>
                 <span className="font-mono text-xs text-teal">draft</span>
-              </div>
+              </div> */}
 
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
@@ -132,7 +132,7 @@ const Contact = () => {
 
         <footer className="mt-24 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3 font-mono text-xs text-muted-foreground">
           <div>
-            © 2025 Alex Chen · Built with <span className="text-teal">React</span> &{" "}
+            © 2025 Ovie David · Built with <span className="text-teal">React</span> &{" "}
             <span className="text-teal">TypeScript</span>
           </div>
           <div className="flex items-center gap-2">

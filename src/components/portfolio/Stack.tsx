@@ -2,12 +2,12 @@ const groups = [
   {
     label: "Frontend",
     color: "teal",
-    items: ["TypeScript", "React", "Next.js", "Vue", "Tailwind", "Vite", "WebSockets", "Three.js"],
+    items: ["TypeScript", "React", "Next.js", "Tailwind", "Vite", "WebSockets", "React Native"],
   },
   {
     label: "Backend",
     color: "blue",
-    items: ["Node.js", "Go", "Python", "Rust", "GraphQL", "gRPC", "PostgreSQL", "Redis", "Kafka"],
+    items: ["Node.js", "Go", "Python", "GraphQL", "gRPC", "PostgreSQL", "Redis", "Kafka"],
   },
   {
     label: "DevOps",
@@ -17,8 +17,21 @@ const groups = [
   {
     label: "Cloud",
     color: "pink",
-    items: ["AWS", "GCP", "Cloudflare", "Vercel", "Supabase", "Lambda", "RDS", "S3"],
+    items: [
+       "AWS (Lambda, S3, RDS)", "GCP (Firestore, cloud functions", "Firebase", "Cloudflare", "Vercel", "Supabase"
+    ],
   },
+//   {
+//   label: "AI / ML",
+//   color: "purple",
+//   items: [
+//     "Python (ML workflows)",
+//     "OpenAI API",
+//     "Embeddings",
+//     "Vector DBs",
+//     "Model inference pipelines"
+//   ]
+// }
 ];
 
 const colorMap: Record<string, string> = {
@@ -30,7 +43,7 @@ const colorMap: Record<string, string> = {
 
 const Stack = () => {
   return (
-    <section id="stack" className="relative py-32 border-t border-border/50">
+    <section id="stack" className="relative py-10 border-t border-border/50">
       <div className="container">
         <div className="flex items-end justify-between flex-wrap gap-4 mb-12">
           <div className="space-y-4 max-w-2xl">
@@ -39,7 +52,8 @@ const Stack = () => {
               Tools I reach for.
             </h2>
             <p className="text-muted-foreground">
-              Categorized by where they live in the stack. Tool-agnostic on principle, opinionated in practice.
+              {/* Categorized by where they live in the stack. Tool-agnostic on principle, opinionated in practice. */}
+              I choose tools based on the problem—not trends—but I have strong preferences shaped by real-world systems.
             </p>
           </div>
           <div className="font-mono text-xs text-muted-foreground">

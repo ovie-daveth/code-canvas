@@ -25,7 +25,7 @@ const Hero = () => {
               <span className="text-teal">$</span> whoami
             </p>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05]">
-              <span className="text-gradient">Alex Chen.</span>
+              <span className="text-gradient">Ovie David.</span>
               <br />
               <span className="text-foreground">Fullstack</span>{" "}
               <span className="text-gradient-accent">Engineer</span>
@@ -33,9 +33,9 @@ const Hero = () => {
           </div>
 
           <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
-            I build <span className="text-foreground font-medium">scalable distributed systems</span> and
-            developer-first products. Currently architecting low-latency platforms that serve{" "}
-            <span className="text-teal font-mono">10M+ requests/day</span>.
+            I build <span className="text-foreground font-medium">scalable distributed systems</span> and {" "}
+            <span className="text-foreground font-medium">AI-powered developer-first </span> products. Currently architecting low-latency platforms and exploring applied AI that {" "}
+            <span className="text-teal">in production systems.</span>
           </p>
 
           <div className="flex flex-wrap items-center gap-3">
@@ -54,7 +54,7 @@ const Hero = () => {
               Contact
             </a>
             <a
-              href="https://github.com"
+              href="https://github.com/ovie-daveth"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center justify-center w-11 h-11 border border-border rounded-md text-muted-foreground hover:text-foreground hover:border-teal/40 transition-all"
@@ -67,8 +67,8 @@ const Hero = () => {
           {/* Stats row */}
           <div className="grid grid-cols-3 gap-4 pt-8 border-t border-border max-w-md">
             {[
-              { v: "7+", l: "Years" },
-              { v: "40+", l: "Projects" },
+              { v: "6+", l: "Years" },
+              { v: "20+", l: "Projects" },
               { v: "99.9%", l: "Uptime" },
             ].map((s) => (
               <div key={s.l}>
