@@ -1,84 +1,7 @@
 import { useState } from "react";
-import { ExternalLink, Github, ChevronDown } from "lucide-react";
-
-type Project = {
-  id: string;
-  name: string;
-  tagline: string;
-  stack: string[];
-  challenges: string[];
-  architecture: string;
-  demo: string;
-  repo: string;
-  metric: { value: string; label: string };
-};
-
-const projects: Project[] = [
-  {
-    id: "edge-cache",
-    name: "EdgeCache",
-    tagline: "Distributed cache layer with sub-ms p99 reads across 14 regions.",
-    stack: ["Go", "Redis", "Cloudflare Workers", "Terraform"],
-    challenges: [
-      "Cache coherency under 200ms cross-region writes",
-      "Graceful degradation when origin cluster is partitioned",
-      "Zero-downtime schema migrations on hot keys",
-    ],
-    architecture:
-      "Built on a CRDT-based replication layer with consistent hashing for shard placement. Writes propagate via Kafka; reads hit the closest edge POP. Designed eviction with W-TinyLFU to retain hot working sets under memory pressure.",
-    demo: "#",
-    repo: "#",
-    metric: { value: "0.8ms", label: "p99 read latency" },
-  },
-  {
-    id: "stream-engine",
-    name: "Streamline",
-    tagline: "Real-time analytics engine processing 2M events/sec.",
-    stack: ["Rust", "Kafka", "ClickHouse", "Kubernetes"],
-    challenges: [
-      "Backpressure handling without dropping events",
-      "Exactly-once semantics across consumer rebalances",
-      "Hot-partition mitigation for skewed customer load",
-    ],
-    architecture:
-      "Stateful stream processors written in Rust consume partitioned topics, maintain in-memory windows, and flush to ClickHouse via async batches. Checkpointing uses a two-phase commit pattern coordinated through etcd.",
-    demo: "#",
-    repo: "#",
-    metric: { value: "2M/s", label: "events ingested" },
-  },
-  {
-    id: "devboard",
-    name: "DevBoard",
-    tagline: "Self-hosted observability platform for indie engineering teams.",
-    stack: ["TypeScript", "Next.js", "PostgreSQL", "OpenTelemetry"],
-    challenges: [
-      "Storing high-cardinality traces affordably",
-      "Sub-second query response over weeks of data",
-      "Single-binary deploy with zero external deps",
-    ],
-    architecture:
-      "OTLP receiver writes to a columnar Postgres extension. Traces are sampled adaptively based on error rate and latency outliers. Query layer pre-aggregates rollups in materialized views refreshed via logical replication.",
-    demo: "#",
-    repo: "#",
-    metric: { value: "40+", label: "GitHub stars/wk" },
-  },
-  {
-    id: "ml-router",
-    name: "RouteML",
-    tagline: "Cost-aware LLM routing gateway with semantic caching.",
-    stack: ["Python", "FastAPI", "pgvector", "Docker"],
-    challenges: [
-      "Routing decisions in <30ms across 12 model providers",
-      "Semantic cache invalidation without false positives",
-      "Streaming response normalization across SSE dialects",
-    ],
-    architecture:
-      "Embedding-based intent classifier scores prompts and routes to the cheapest model meeting quality thresholds. Cache uses HNSW index over pgvector with cosine similarity. Streaming proxy normalizes deltas before forwarding.",
-    demo: "#",
-    repo: "#",
-    metric: { value: "−68%", label: "inference cost" },
-  },
-];
+import { Link } from "react-router-dom";
+import { ExternalLink, Github, ChevronDown, ArrowRight } from "lucide-react";
+import { featuredProjects, type Project } from "@/data/projects";
 
 const ProjectCard = ({ project, idx }: { project: Project; idx: number }) => {
   const [open, setOpen] = useState(false);
@@ -186,9 +109,19 @@ const Projects = () => {
         </div>
 
         <div className="grid md:grid-cols-2 gap-5">
-          {projects.map((p, i) => (
+          {featuredProjects.map((p, i) => (
             <ProjectCard key={p.id} project={p} idx={i} />
           ))}
+        </div>
+
+        <div className="mt-12 flex justify-center">
+          <Link
+            to="/projects"
+            className="group inline-flex items-center gap-2 px-6 py-3 font-mono text-sm border border-teal/40 text-teal rounded-md hover:bg-teal/10 transition-all"
+          >
+            View more projects
+            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+          </Link>
         </div>
       </div>
     </section>
