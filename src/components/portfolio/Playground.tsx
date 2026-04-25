@@ -17,7 +17,7 @@ const endpoints: Endpoint[] = [
     path: "/api/v1/profile",
     summary: "Returns the engineer profile object",
     responses: {
-      name: "Alex Chen",
+      name: "Ovie David",
       title: "Fullstack Engineer",
       yearsExperience: 7,
       location: "San Francisco, CA",
@@ -115,7 +115,7 @@ const Playground = () => {
             </p>
           </div>
           <div className="font-mono text-xs text-muted-foreground space-y-1">
-            <div><span className="text-green">●</span> api.alex.dev — operational</div>
+            <div><span className="text-green">●</span> api.ovie.dev — operational</div>
             <div className="text-right">v1.4.2 · 99.98% uptime</div>
           </div>
         </div>
@@ -167,7 +167,7 @@ const Playground = () => {
                   {active.method}
                 </span>
                 <code className="flex-1 font-mono text-sm text-foreground truncate">
-                  https://api.alex.dev{active.path}
+                  https://api.ovie.dev{active.path}
                 </code>
                 <button
                   onClick={send}
