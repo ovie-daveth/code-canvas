@@ -86,7 +86,7 @@ export const projects: Project[] = [
     architecture:
       "OTLP receiver writes to a columnar Postgres extension. Traces are sampled adaptively based on error rate and latency outliers. Query layer pre-aggregates rollups in materialized views refreshed via logical replication.",
     demo: "#",
-    repo: "#",
+    repo: "https://github.com/ovie-daveth/devboard",
     metric: { value: "40+", label: "GitHub stars/wk" },
     categories: ["fullstack", "frontend", "backend"],
     primaryCategory: "fullstack",

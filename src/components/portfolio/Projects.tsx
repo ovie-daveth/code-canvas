@@ -61,6 +61,7 @@ const ProjectCard = ({ project, idx }: { project: Project; idx: number }) => {
         <div className="flex items-center gap-2 pt-2 border-t border-border">
           <a
             href={project.demo}
+            target="_blank"
             className="inline-flex items-center gap-1.5 text-sm text-foreground hover:text-teal transition-colors"
           >
             <ExternalLink size={14} /> Live
@@ -68,6 +69,7 @@ const ProjectCard = ({ project, idx }: { project: Project; idx: number }) => {
           <span className="text-border">·</span>
           <a
             href={project.repo}
+            target="_blank"
             className="inline-flex items-center gap-1.5 text-sm text-foreground hover:text-teal transition-colors"
           >
             <Github size={14} /> Repo

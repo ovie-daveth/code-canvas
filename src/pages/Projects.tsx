@@ -116,6 +116,7 @@ const ProjectRow = ({ project, idx }: { project: Project; idx: number }) => {
       <footer className="mt-auto pt-4 border-t border-border flex flex-wrap items-center gap-2">
         <a
           href={project.demo}
+          target="_blank"
           className="inline-flex items-center gap-1.5 text-xs text-foreground hover:text-teal transition-colors"
         >
           <ExternalLink size={13} /> Live
@@ -123,6 +124,7 @@ const ProjectRow = ({ project, idx }: { project: Project; idx: number }) => {
         <span className="text-border">·</span>
         <a
           href={project.repo}
+          target="_blank"
           title="View codebase (GitHub integration coming soon)"
           className="inline-flex items-center gap-1.5 text-xs text-foreground hover:text-teal transition-colors"
         >
