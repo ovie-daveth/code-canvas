@@ -184,8 +184,25 @@ const getOpenApiDocument = async () => {
   return openApiCache;
 };
 
-const buildRecurrUrl = (pathValue, query = {}) => {
-  const base = new URL(RECURR_API_BASE);
+const getRecurrBaseUrl = (requestedBase) => {
+  const fallback = new URL(RECURR_API_BASE);
+  const requested = clean(requestedBase);
+
+  if (!requested) return fallback;
+
+  try {
+    const absolute = requested.startsWith("/")
+      ? new URL(requested, fallback.origin)
+      : new URL(requested);
+
+    return absolute.origin === fallback.origin ? absolute : fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const buildRecurrUrl = (pathValue, query = {}, requestedBase) => {
+  const base = getRecurrBaseUrl(requestedBase);
   const normalizedPath = clean(pathValue).startsWith("/")
     ? clean(pathValue)
     : `/${clean(pathValue)}`;
@@ -211,7 +228,7 @@ const proxyRecurrRequest = async (payload) => {
     throw new Error("Unsupported request method.");
   }
 
-  const targetUrl = buildRecurrUrl(payload.path, payload.query);
+  const targetUrl = buildRecurrUrl(payload.path, payload.query, payload.serverUrl);
   const headers = { Accept: "application/json" };
   const authorization = clean(payload.authorization);
 
