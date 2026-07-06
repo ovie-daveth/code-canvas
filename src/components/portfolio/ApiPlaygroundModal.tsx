@@ -73,6 +73,9 @@ const createEndpoints = (project: Project): Endpoint[] => {
   ];
 };
 
+const getEndpointUrl = (path: string) =>
+  /^https?:\/\//i.test(path) ? path : `https://api.portfolio.dev${path}`;
+
 type ApiPlaygroundModalProps = {
   project: Project;
   triggerClassName?: string;
@@ -173,7 +176,7 @@ const ApiPlaygroundModal = ({ project, triggerClassName }: ApiPlaygroundModalPro
                 {active.method}
               </span>
               <code className="flex-1 truncate font-mono text-sm text-foreground">
-                https://api.portfolio.dev{active.path}
+                {getEndpointUrl(active.path)}
               </code>
               <button
                 type="button"

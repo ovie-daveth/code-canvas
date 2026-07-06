@@ -22,6 +22,32 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: "recurr",
+    name: "Recurr",
+    tagline:
+      "Managed subscription and recurring billing infrastructure built on Nomba payment APIs.",
+    description:
+      "Recurring billing infrastructure that helps businesses integrate automated payments, billing, and subscription lifecycle management with minimal development effort.",
+    stack: ["TypeScript", "Express", "Prisma", "PostgreSQL", "Nomba APIs", "Railway"],
+    challenges: [
+      "Tenant-scoped merchant APIs for subscription lifecycle operations",
+      "Recurring payment orchestration on top of Nomba checkout and transaction flows",
+      "Webhook delivery, verification, and event inspection for billing automation",
+    ],
+    architecture:
+      "Express and Prisma backend exposing tenant-aware billing APIs for businesses, subscriptions, portal sessions, webhook endpoints, and provider events. Nomba APIs power checkout and payment collection, while Railway hosts the production API for the Nomba DevCenter hackathon build.",
+    demo: "https://recurr-be-production.up.railway.app/api/v1",
+    repo: "https://github.com/ovie-daveth/recurr-be",
+    metric: { value: "API", label: "billing infra" },
+    categories: ["backend", "fullstack", "cloud"],
+    primaryCategory: "backend",
+    hasApi: true,
+    apiEndpoint: "https://recurr-be-production.up.railway.app/api/v1",
+    featured: true,
+    year: 2026,
+    status: "production",
+  },
+  {
     id: "edge-cache",
     name: "EdgeCache",
     tagline: "Distributed cache layer with sub-ms p99 reads across 14 regions.",
