@@ -48,6 +48,10 @@ const createTransporter = () => {
   const user = process.env.SMTP_USER || process.env.GMAIL_USER;
   const pass = process.env.SMTP_PASS || process.env.GMAIL_APP_PASSWORD;
 
+  if (pass === "your-google-app-password") {
+    throw new Error("Replace GMAIL_APP_PASSWORD with a real Google App Password.");
+  }
+
   if (process.env.SMTP_SERVICE || process.env.GMAIL_USER) {
     if (!user || !pass) return null;
     return nodemailer.createTransport({

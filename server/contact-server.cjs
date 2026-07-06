@@ -3,6 +3,28 @@ const http = require("node:http");
 const path = require("node:path");
 const nodemailer = require("nodemailer");
 
+const loadDotEnv = () => {
+  const envPath = path.join(__dirname, "..", ".env");
+  if (!fs.existsSync(envPath)) return;
+
+  const lines = fs.readFileSync(envPath, "utf8").split(/\r?\n/);
+  lines.forEach((line) => {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) return;
+
+    const separator = trimmed.indexOf("=");
+    if (separator === -1) return;
+
+    const key = trimmed.slice(0, separator).trim();
+    const value = trimmed.slice(separator + 1).trim().replace(/^["']|["']$/g, "");
+    if (key && process.env[key] === undefined) {
+      process.env[key] = value;
+    }
+  });
+};
+
+loadDotEnv();
+
 const PORT = Number(process.env.PORT || 3000);
 const CONTACT_TO = process.env.CONTACT_TO || "davethsite@gmail.com";
 const DIST_DIR = path.join(__dirname, "..", "dist");
@@ -85,6 +107,10 @@ const createTransporter = () => {
   const host = process.env.SMTP_HOST;
   const user = process.env.SMTP_USER || process.env.GMAIL_USER;
   const pass = process.env.SMTP_PASS || process.env.GMAIL_APP_PASSWORD;
+
+  if (pass === "your-google-app-password") {
+    throw new Error("Replace GMAIL_APP_PASSWORD with a real Google App Password.");
+  }
 
   if (process.env.SMTP_SERVICE || process.env.GMAIL_USER) {
     if (!user || !pass) return null;
