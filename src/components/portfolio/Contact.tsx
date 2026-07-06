@@ -5,7 +5,7 @@ import { toast } from "sonner";
 const links = [
   { icon: Github, label: "github.com/ovie-daveth", href: "https://github.com/ovie-daveth" },
   { icon: Linkedin, label: "linkedin.com/in/omokefe-ovie", href: "https://linkedin.com/in/omokefe-ovie" },
-  { icon: Mail, label: "ovie@ovie.dev", href: "mailto:oviedavid77@gmail.com" },
+  { icon: Mail, label: "davethsite@gmail.com", href: "mailto:davethsite@gmail.com" },
 ];
 
 const Contact = () => {
@@ -14,12 +14,38 @@ const Contact = () => {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const form = e.currentTarget as HTMLFormElement;
+    const formData = new FormData(form);
+    const payload = {
+      name: String(formData.get("name") || ""),
+      email: String(formData.get("email") || ""),
+      subject: String(formData.get("subject") || ""),
+      message: String(formData.get("message") || ""),
+    };
+
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 800));
-    setLoading(false);
-    setSent(true);
-    toast.success("Message queued — I'll reply within 24h.");
-    setTimeout(() => setSent(false), 4000);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const result = (await response.json()) as { ok?: boolean; error?: string };
+
+      if (!response.ok || !result.ok) {
+        throw new Error(result.error || "Unable to send message right now.");
+      }
+
+      form.reset();
+      setSent(true);
+      toast.success("Message sent. I'll reply within 24h.");
+      setTimeout(() => setSent(false), 4000);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Unable to send message right now.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -55,13 +81,6 @@ const Contact = () => {
 
           <div className="lg:col-span-7">
             <form onSubmit={onSubmit} className="surface-card p-6 md:p-8 space-y-5">
-              {/* <div className="flex items-center justify-between pb-4 border-b border-border">
-                <div className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-                  POST /api/v1/contact
-                </div>
-                <span className="font-mono text-xs text-teal">draft</span>
-              </div> */}
-
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <label className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
@@ -69,6 +88,7 @@ const Contact = () => {
                   </label>
                   <input
                     required
+                    name="name"
                     placeholder="Jane Doe"
                     className="w-full px-3 py-2.5 bg-background border border-border rounded-md text-sm focus:outline-none focus:border-teal/50 focus:ring-1 focus:ring-teal/30 transition-colors"
                   />
@@ -79,6 +99,7 @@ const Contact = () => {
                   </label>
                   <input
                     required
+                    name="email"
                     type="email"
                     placeholder="jane@company.com"
                     className="w-full px-3 py-2.5 bg-background border border-border rounded-md text-sm focus:outline-none focus:border-teal/50 focus:ring-1 focus:ring-teal/30 transition-colors"
@@ -92,6 +113,7 @@ const Contact = () => {
                 </label>
                 <input
                   required
+                  name="subject"
                   placeholder="Staff engineer role / technical advisory / ..."
                   className="w-full px-3 py-2.5 bg-background border border-border rounded-md text-sm focus:outline-none focus:border-teal/50 focus:ring-1 focus:ring-teal/30 transition-colors"
                 />
@@ -103,6 +125,7 @@ const Contact = () => {
                 </label>
                 <textarea
                   required
+                  name="message"
                   rows={5}
                   placeholder="Tell me about the system, the team, and the problem..."
                   className="w-full px-3 py-2.5 bg-background border border-border rounded-md text-sm focus:outline-none focus:border-teal/50 focus:ring-1 focus:ring-teal/30 transition-colors resize-none"
@@ -132,7 +155,7 @@ const Contact = () => {
 
         <footer className="mt-24 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3 font-mono text-xs text-muted-foreground">
           <div>
-            © 2025 Ovie David · Built with <span className="text-teal">React</span> &{" "}
+            (c) 2025 Ovie David - Built with <span className="text-teal">React</span> &{" "}
             <span className="text-teal">TypeScript</span>
           </div>
           <div className="flex items-center gap-2">

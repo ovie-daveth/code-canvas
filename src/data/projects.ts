@@ -1,4 +1,4 @@
-export type ProjectCategory = "frontend" | "backend" | "devops" | "cloud" | "fullstack";
+export type ProjectCategory = "frontend" | "backend" | "devops" | "cloud" | "fullstack" | "fintech" ;
 
 export type Project = {
   id: string;
@@ -73,6 +73,38 @@ export const projects: Project[] = [
     year: 2026,
     status: "production",
   },
+   {
+  id: "otax",
+  name: "OTax",
+  tagline:
+    "Modern tax automation and compliance platform for individuals and businesses",
+  description:
+    "A full-stack tax technology platform that simplifies tax filing, taxpayer registration, compliance workflows, document management, and digital tax payments through an intuitive web experience.",
+  stack: [
+    "Next.js",
+    "TypeScript",
+    "Firebase",
+    "Tailwind CSS",
+    "Zod",
+  ],
+  challenges: [
+    "Designing secure workflows for sensitive taxpayer and financial data",
+    "Building scalable tax filing and compliance processes for multiple user types",
+    "Validating complex tax forms and financial data across frontend and backend",
+    "Creating an intuitive experience for users with limited tax knowledge",
+  ],
+  architecture:
+    "Full-stack Next.js application with Firebase Authentication and Firestore for secure user management and data persistence. The platform uses Zod for end-to-end validation, modular service architecture for tax workflows, and integrates document management, filing processes, and payment-ready infrastructure into a unified system.",
+  demo: "https://otaxng.com",
+  repo: "#",
+  privateRepo: true,
+  metric: { value: "Tax", label: "Automation Platform" },
+  categories: ["fullstack", "frontend", "backend", "fintech"],
+  primaryCategory: "fullstack",
+  featured: true,
+  year: 2026,
+  status: "production",
+},
   {
     id: "edge-cache",
     name: "EdgeCache",
@@ -364,6 +396,7 @@ export const categoryLabels: Record<ProjectCategory | "all", string> = {
   backend: "Backend Heavy",
   devops: "DevOps Heavy",
   cloud: "Cloud Heavy",
+  fintech: "Fintech Heavy",
 };
 
 export const categoryColors: Record<ProjectCategory, string> = {
@@ -372,4 +405,5 @@ export const categoryColors: Record<ProjectCategory, string> = {
   devops: "text-amber border-amber/30 bg-amber/5",
   cloud: "text-blue border-blue/30 bg-blue/5",
   fullstack: "text-green border-green/30 bg-green/5",
+  fintech: "text-purple border-purple/30 bg-purple/5",
 };
