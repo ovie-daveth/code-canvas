@@ -36,7 +36,7 @@ export const projects: Project[] = [
     ],
     architecture:
       "Express and Prisma backend exposing tenant-aware billing APIs for businesses, subscriptions, portal sessions, webhook endpoints, and provider events. Nomba APIs power checkout and payment collection, while Railway hosts the production API for the Nomba DevCenter hackathon build.",
-    demo: "https://recurr-be-production.up.railway.app/api/v1",
+    demo: "https://recurr-be-production.up.railway.app/api/docs/",
     repo: "https://github.com/ovie-daveth/recurr-be",
     metric: { value: "API", label: "billing infra" },
     categories: ["backend", "fullstack", "cloud"],
