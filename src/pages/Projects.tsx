@@ -42,6 +42,8 @@ const statusStyles: Record<Project["status"], string> = {
   archived: "text-muted-foreground border-border bg-surface-elevated",
 };
 
+const isExternalUrl = (url: string) => /^https?:\/\//i.test(url);
+
 const ProjectRow = ({ project, idx }: { project: Project; idx: number }) => {
   return (
     <article
@@ -114,13 +116,23 @@ const ProjectRow = ({ project, idx }: { project: Project; idx: number }) => {
 
       {/* Actions */}
       <footer className="mt-auto pt-4 border-t border-border flex flex-wrap items-center gap-2">
-        <a
-          href={project.demo}
-          target="_blank"
-          className="inline-flex items-center gap-1.5 text-xs text-foreground hover:text-teal transition-colors"
-        >
-          <ExternalLink size={13} /> Live
-        </a>
+        {isExternalUrl(project.demo) ? (
+          <a
+            href={project.demo}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1.5 text-xs text-foreground hover:text-teal transition-colors"
+          >
+            <ExternalLink size={13} /> Live
+          </a>
+        ) : (
+          <Link
+            to={project.demo}
+            className="inline-flex items-center gap-1.5 text-xs text-foreground hover:text-teal transition-colors"
+          >
+            <ExternalLink size={13} /> Live
+          </Link>
+        )}
         <span className="text-border">·</span>
         {project.privateRepo ? (
           <span

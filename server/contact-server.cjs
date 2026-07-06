@@ -6,6 +6,15 @@ const nodemailer = require("nodemailer");
 const PORT = Number(process.env.PORT || 3000);
 const CONTACT_TO = process.env.CONTACT_TO || "davethsite@gmail.com";
 const DIST_DIR = path.join(__dirname, "..", "dist");
+const RECURR_API_BASE =
+  process.env.RECURR_API_BASE || "https://recurr-be-production.up.railway.app/api/v1";
+const RECURR_OPENAPI_URL =
+  process.env.RECURR_OPENAPI_URL ||
+  "https://recurr-be-production.up.railway.app/api/docs/openapi.json";
+const OPENAPI_CACHE_TTL_MS = 5 * 60 * 1000;
+
+let openApiCache = null;
+let openApiCacheTime = 0;
 
 const json = (res, status, payload) => {
   const body = JSON.stringify(payload);
@@ -16,13 +25,13 @@ const json = (res, status, payload) => {
   res.end(body);
 };
 
-const readJsonBody = (req) =>
+const readJsonBody = (req, maxBytes = 20_000) =>
   new Promise((resolve, reject) => {
     let body = "";
 
     req.on("data", (chunk) => {
       body += chunk;
-      if (body.length > 20_000) {
+      if (body.length > maxBytes) {
         reject(new Error("Request body is too large."));
         req.destroy();
       }
@@ -132,6 +141,91 @@ const sendContactEmail = async (payload) => {
   });
 };
 
+const getOpenApiDocument = async () => {
+  const fresh = openApiCache && Date.now() - openApiCacheTime < OPENAPI_CACHE_TTL_MS;
+  if (fresh) return openApiCache;
+
+  const response = await fetch(RECURR_OPENAPI_URL, {
+    headers: { Accept: "application/json" },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Unable to load Recurr OpenAPI document (${response.status}).`);
+  }
+
+  openApiCache = await response.json();
+  openApiCacheTime = Date.now();
+  return openApiCache;
+};
+
+const buildRecurrUrl = (pathValue, query = {}) => {
+  const base = new URL(RECURR_API_BASE);
+  const normalizedPath = clean(pathValue).startsWith("/")
+    ? clean(pathValue)
+    : `/${clean(pathValue)}`;
+  const basePath = base.pathname.replace(/\/$/, "");
+  const pathname = normalizedPath.startsWith(basePath)
+    ? normalizedPath
+    : `${basePath}${normalizedPath}`;
+  const url = new URL(pathname, base.origin);
+
+  Object.entries(query || {}).forEach(([key, value]) => {
+    if (value === undefined || value === null || value === "") return;
+    url.searchParams.set(key, String(value));
+  });
+
+  return url;
+};
+
+const proxyRecurrRequest = async (payload) => {
+  const method = clean(payload.method || "GET").toUpperCase();
+  const allowedMethods = new Set(["GET", "POST", "PUT", "PATCH", "DELETE"]);
+
+  if (!allowedMethods.has(method)) {
+    throw new Error("Unsupported request method.");
+  }
+
+  const targetUrl = buildRecurrUrl(payload.path, payload.query);
+  const headers = { Accept: "application/json" };
+  const authorization = clean(payload.authorization);
+
+  if (authorization) {
+    headers.Authorization = authorization.toLowerCase().startsWith("bearer ")
+      ? authorization
+      : `Bearer ${authorization}`;
+  }
+
+  const request = { method, headers };
+  const hasBody = !["GET", "DELETE"].includes(method) && payload.body !== undefined;
+
+  if (hasBody) {
+    headers["Content-Type"] = "application/json";
+    request.body =
+      typeof payload.body === "string" ? payload.body : JSON.stringify(payload.body);
+  }
+
+  const startedAt = Date.now();
+  const response = await fetch(targetUrl, request);
+  const text = await response.text();
+  let body = text;
+
+  try {
+    body = text ? JSON.parse(text) : null;
+  } catch {
+    body = text;
+  }
+
+  return {
+    ok: response.ok,
+    status: response.status,
+    statusText: response.statusText,
+    ms: Date.now() - startedAt,
+    url: targetUrl.toString(),
+    contentType: response.headers.get("content-type"),
+    body,
+  };
+};
+
 const contentTypes = {
   ".css": "text/css; charset=utf-8",
   ".html": "text/html; charset=utf-8",
@@ -163,17 +257,48 @@ const serveStatic = (req, res) => {
 };
 
 const server = http.createServer(async (req, res) => {
+  const requestUrl = new URL(req.url, "http://localhost");
+
   if (req.method === "OPTIONS") {
     res.writeHead(204, {
       "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
     });
     res.end();
     return;
   }
 
-  if (req.url === "/api/contact" && req.method === "POST") {
+  if (requestUrl.pathname === "/api/recurr/openapi" && req.method === "GET") {
+    try {
+      const document = await getOpenApiDocument();
+      json(res, 200, { ok: true, document });
+    } catch (error) {
+      console.error(error);
+      json(res, 502, {
+        ok: false,
+        error: error.message || "Unable to load Recurr API documentation.",
+      });
+    }
+    return;
+  }
+
+  if (requestUrl.pathname === "/api/recurr/request" && req.method === "POST") {
+    try {
+      const body = await readJsonBody(req, 250_000);
+      const result = await proxyRecurrRequest(body);
+      json(res, 200, result);
+    } catch (error) {
+      console.error(error);
+      json(res, 400, {
+        ok: false,
+        error: error.message || "Unable to call Recurr API.",
+      });
+    }
+    return;
+  }
+
+  if (requestUrl.pathname === "/api/contact" && req.method === "POST") {
     try {
       const body = await readJsonBody(req);
       const result = validateContact(body);

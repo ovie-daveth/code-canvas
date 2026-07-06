@@ -4,6 +4,8 @@ import { ExternalLink, Github, ChevronDown, ArrowRight } from "lucide-react";
 import { featuredProjects, type Project } from "@/data/projects";
 import ApiPlaygroundModal from "@/components/portfolio/ApiPlaygroundModal";
 
+const isExternalUrl = (url: string) => /^https?:\/\//i.test(url);
+
 const ProjectCard = ({ project, idx }: { project: Project; idx: number }) => {
   const [open, setOpen] = useState(false);
 
@@ -59,13 +61,23 @@ const ProjectCard = ({ project, idx }: { project: Project; idx: number }) => {
         </div>
 
         <div className="flex items-center gap-2 pt-2 border-t border-border">
-          <a
-            href={project.demo}
-            target="_blank"
-            className="inline-flex items-center gap-1.5 text-sm text-foreground hover:text-teal transition-colors"
-          >
-            <ExternalLink size={14} /> Live
-          </a>
+          {isExternalUrl(project.demo) ? (
+            <a
+              href={project.demo}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm text-foreground hover:text-teal transition-colors"
+            >
+              <ExternalLink size={14} /> Live
+            </a>
+          ) : (
+            <Link
+              to={project.demo}
+              className="inline-flex items-center gap-1.5 text-sm text-foreground hover:text-teal transition-colors"
+            >
+              <ExternalLink size={14} /> Live
+            </Link>
+          )}
           <span className="text-border">·</span>
           {project.privateRepo ? (
             <span className="inline-flex items-center gap-1.5 text-sm text-muted-foreground">
