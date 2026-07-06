@@ -122,14 +122,23 @@ const ProjectRow = ({ project, idx }: { project: Project; idx: number }) => {
           <ExternalLink size={13} /> Live
         </a>
         <span className="text-border">·</span>
-        <a
-          href={project.repo}
-          target="_blank"
-          title="View codebase (GitHub integration coming soon)"
-          className="inline-flex items-center gap-1.5 text-xs text-foreground hover:text-teal transition-colors"
-        >
-          <Github size={13} /> Codebase
-        </a>
+        {project.privateRepo ? (
+          <span
+            title="Private GitHub repository"
+            className="inline-flex items-center gap-1.5 text-xs text-muted-foreground"
+          >
+            <Github size={13} /> Private repo
+          </span>
+        ) : (
+          <a
+            href={project.repo}
+            target="_blank"
+            title="View codebase (GitHub integration coming soon)"
+            className="inline-flex items-center gap-1.5 text-xs text-foreground hover:text-teal transition-colors"
+          >
+            <Github size={13} /> Codebase
+          </a>
+        )}
         {project.hasApi && (
           <ApiPlaygroundModal
             project={project}

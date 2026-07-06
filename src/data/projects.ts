@@ -10,6 +10,7 @@ export type Project = {
   architecture: string;
   demo: string;
   repo: string;
+  privateRepo?: boolean;
   metric: { value: string; label: string };
   categories: ProjectCategory[];
   primaryCategory: ProjectCategory;
@@ -43,6 +44,31 @@ export const projects: Project[] = [
     primaryCategory: "backend",
     hasApi: true,
     apiEndpoint: "https://recurr-be-production.up.railway.app/api/v1",
+    featured: true,
+    year: 2026,
+    status: "production",
+  },
+  {
+    id: "methodicaai",
+    name: "MethodicaAI",
+    tagline:
+      "AI-powered student research and study platform for learning, writing, and academic workflows.",
+    description:
+      "A full-stack student platform that uses AI models from Groq, OpenAI, and other providers to support research, study sessions, document workflows, and academic productivity.",
+    stack: ["Next.js", "TypeScript", "Firebase", "Zod", "Groq", "OpenAI"],
+    challenges: [
+      "Coordinating multi-provider AI workflows for study and research tasks",
+      "Managing authenticated student workspaces and saved academic outputs",
+      "Validating full-stack data contracts across AI, Firebase, and UI flows",
+    ],
+    architecture:
+      "Full-stack Next.js application with Firebase-backed authentication and persistence, Zod-validated request boundaries, and AI service integrations across Groq, OpenAI, and other model providers. The platform combines student study tools, research assistance, and document-centered academic workflows behind a production web experience.",
+    demo: "https://methodicaai.com",
+    repo: "#",
+    privateRepo: true,
+    metric: { value: "AI", label: "study platform" },
+    categories: ["fullstack", "frontend", "backend"],
+    primaryCategory: "fullstack",
     featured: true,
     year: 2026,
     status: "production",

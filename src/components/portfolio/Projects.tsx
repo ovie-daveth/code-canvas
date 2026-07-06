@@ -67,13 +67,19 @@ const ProjectCard = ({ project, idx }: { project: Project; idx: number }) => {
             <ExternalLink size={14} /> Live
           </a>
           <span className="text-border">·</span>
-          <a
-            href={project.repo}
-            target="_blank"
-            className="inline-flex items-center gap-1.5 text-sm text-foreground hover:text-teal transition-colors"
-          >
-            <Github size={14} /> Repo
-          </a>
+          {project.privateRepo ? (
+            <span className="inline-flex items-center gap-1.5 text-sm text-muted-foreground">
+              <Github size={14} /> Private repo
+            </span>
+          ) : (
+            <a
+              href={project.repo}
+              target="_blank"
+              className="inline-flex items-center gap-1.5 text-sm text-foreground hover:text-teal transition-colors"
+            >
+              <Github size={14} /> Repo
+            </a>
+          )}
           {project.hasApi && (
             <ApiPlaygroundModal
               project={project}
